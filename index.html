@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráficas Dinámicas Interactivas</title>
+    <title>Gráficas Dinámicas Interactivas con Datos Aleatorios</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -58,6 +58,8 @@
     </div>
 
     <script>
+        const updateInterval = 5000;  // Intervalo de actualización en milisegundos (por ejemplo, 5000 ms = 5 segundos)
+
         // Datos iniciales para las gráficas
         const initialLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'];
         const initialBarData = [12, 19, 3, 5, 2, 3];
@@ -144,6 +146,33 @@
             lineChart.data.datasets[0].data.pop();
             lineChart.update();
         }
+
+        // Función para actualizar las gráficas con datos aleatorios
+        function updateCharts() {
+            const randomValueBar = Math.floor(Math.random() * 100);
+            const randomValueLine = Math.floor(Math.random() * 100);
+            const currentTime = new Date().toLocaleTimeString();
+
+            barChart.data.labels.push(currentTime);
+            barChart.data.datasets[0].data.push(randomValueBar);
+            barChart.update();
+
+            lineChart.data.labels.push(currentTime);
+            lineChart.data.datasets[0].data.push(randomValueLine);
+            lineChart.update();
+
+            if (barChart.data.labels.length > 10) {
+                barChart.data.labels.shift();
+                barChart.data.datasets[0].data.shift();
+            }
+
+            if (lineChart.data.labels.length > 10) {
+                lineChart.data.labels.shift();
+                lineChart.data.datasets[0].data.shift();
+            }
+        }
+
+        setInterval(updateCharts, updateInterval);
     </script>
 </body>
 </html>
