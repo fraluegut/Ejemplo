@@ -3,11 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráficas Dinámicas</title>
+    <title>Gráficas Dinámicas Interactivas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .form-container {
+            margin: 20px 0;
+        }
+        .form-container input, .form-container button {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Gráficas Dinámicas con Chart.js</h1>
+    <h1>Gráficas Dinámicas Interactivas con Chart.js</h1>
+
+    <div class="form-container">
+        <label for="labelInput">Etiqueta:</label>
+        <input type="text" id="labelInput" placeholder="Etiqueta">
+        <label for="dataInput">Valor:</label>
+        <input type="number" id="dataInput" placeholder="Valor">
+        <button onclick="addData()">Agregar Datos</button>
+        <button onclick="removeData()">Eliminar Último</button>
+    </div>
+
     <div style="width: 50%; float: left;">
         <canvas id="barChart"></canvas>
     </div>
@@ -16,31 +34,22 @@
     </div>
 
     <script>
+        // Datos iniciales para las gráficas
+        const initialLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'];
+        const initialBarData = [12, 19, 3, 5, 2, 3];
+        const initialLineData = [15, 29, 5, 10, 4, 7];
+
         // Configuración de la gráfica de barras
         const ctxBar = document.getElementById('barChart').getContext('2d');
         const barChart = new Chart(ctxBar, {
             type: 'bar',
             data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                labels: initialLabels,
                 datasets: [{
                     label: 'Ventas',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    data: initialBarData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]
             },
@@ -58,12 +67,12 @@
         const lineChart = new Chart(ctxLine, {
             type: 'line',
             data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                labels: initialLabels,
                 datasets: [{
                     label: 'Ingresos',
-                    data: [15, 29, 5, 10, 4, 7],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    data: initialLineData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
                     fill: true
                 }]
@@ -76,6 +85,39 @@
                 }
             }
         });
+
+        // Función para agregar datos a las gráficas
+        function addData() {
+            const label = document.getElementById('labelInput').value;
+            const data = document.getElementById('dataInput').value;
+
+            if (label && data) {
+                barChart.data.labels.push(label);
+                barChart.data.datasets[0].data.push(data);
+                barChart.update();
+
+                lineChart.data.labels.push(label);
+                lineChart.data.datasets[0].data.push(data);
+                lineChart.update();
+
+                // Limpiar los campos del formulario
+                document.getElementById('labelInput').value = '';
+                document.getElementById('dataInput').value = '';
+            } else {
+                alert("Por favor, ingrese una etiqueta y un valor.");
+            }
+        }
+
+        // Función para eliminar el último dato de las gráficas
+        function removeData() {
+            barChart.data.labels.pop();
+            barChart.data.datasets[0].data.pop();
+            barChart.update();
+
+            lineChart.data.labels.pop();
+            lineChart.data.datasets[0].data.pop();
+            lineChart.update();
+        }
     </script>
 </body>
 </html>
