@@ -3,64 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documento de Ejemplo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-        }
-        main {
-            padding: 2rem;
-        }
-        section {
-            margin-bottom: 2rem;
-        }
-        h1, h2, h3 {
-            color: #444;
-        }
-        p {
-            line-height: 1.6;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
+    <title>Gráficas Dinámicas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Bienvenido a Mi Página de Ejemplo</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Sección 1</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod, nisi vel consectetur interdum, nisl nisi volutpat quam, eu tincidunt eros urna eget nunc.</p>
-        </section>
-        <section>
-            <h2>Sección 2</h2>
-            <p>Praesent id purus nec nunc tincidunt lacinia. Quisque scelerisque luctus neque, vel hendrerit metus suscipit a. Ut venenatis vitae nunc vel vehicula.</p>
-        </section>
-        <section>
-            <h2>Sección 3</h2>
-            <p>Maecenas non sem sed orci dapibus viverra. Phasellus auctor nunc quis sem pulvinar, a iaculis tortor vulputate. Nulla facilisi. Fusce id massa at mi venenatis laoreet.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mi Página de Ejemplo</p>
-    </footer>
+    <h1>Gráficas Dinámicas con Chart.js</h1>
+    <div style="width: 50%; float: left;">
+        <canvas id="barChart"></canvas>
+    </div>
+    <div style="width: 50%; float: left;">
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <script>
+        // Configuración de la gráfica de barras
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                datasets: [{
+                    label: 'Ventas',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Configuración de la gráfica de líneas
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        const lineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                datasets: [{
+                    label: 'Ingresos',
+                    data: [15, 29, 5, 10, 4, 7],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
